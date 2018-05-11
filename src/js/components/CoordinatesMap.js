@@ -8,8 +8,6 @@ import React, {Component} from 'react';
 import GoogleMapReact from 'google-map-react';
 import CoordinateMarker from './CoordinateMarker';
 
-const CoordinateComponent = ({ text }) => <div>{text}</div>;
-
 export default class CoordinatesMap extends Component {
     constructor(props) {
         super(props);
@@ -27,7 +25,6 @@ export default class CoordinatesMap extends Component {
         return (
                 <div id="displayMap">
                     <GoogleMapReact
-                        bootstrapURLKeys={{key: "AIzaSyBXUyrNKCgNRfCDet9IMp-UVaPwfJ08QLE" }}
                         defaultCenter={this.props.center}
                         defaultZoom={this.props.zoom}
                         >
