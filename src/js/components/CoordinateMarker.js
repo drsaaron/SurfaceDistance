@@ -8,15 +8,15 @@ import React, {Component} from 'react';
 import {coordinateMarkerStyle} from './CoordinateMarkerStyle';
 
 export default class CoordinateMarker extends Component {
-        constructor(props) {
-            super(props);
-        }
-        
-        render() {
-            return (
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        return (
                 <div style={coordinateMarkerStyle}>
                     {this.props.text}
                 </div>
-            );
-        }
+                );
+    }
 }
