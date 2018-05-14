@@ -55,15 +55,21 @@ export function updateCoordinates(firstCoordinate, secondCoordinate) {
         // up the rest of the processing while the calculation is being done, 
         // potentially via a service call.  (not in this example, but in principle 
         // it could).
-        var distance1Promise = new Promise((resolve, reject) => {
-            return resolve(calculateDistance1(firstCoordinate, secondCoordinate));
-        }).then((distance) => {
-            dispatch({type: ActionTypes.UPDATE_DISTANCE_1, distance});
-        });
-        var distance2Promise = new Promise((resolve, reject) => {
-            return resolve(calculateDistance2(firstCoordinate, secondCoordinate));
-        }).then((distance) => {
-            dispatch({type: ActionTypes.UPDATE_DISTANCE_2, distance});
+        var calculatorArray = [ 
+            {
+                calculator: calculateDistance1,
+                event: ActionTypes.UPDATE_DISTANCE_1
+            }, {
+                calculator: calculateDistance2,
+                event: ActionTypes.UPDATE_DISTANCE_2
+            }];
+        calculatorArray.map((calculatorDescriptor) => {
+            console.log("initiating calculation for " + calculatorDescriptor.event);
+            var promise = new Promise((resolve, reject) => {
+                return resolve(calculatorDescriptor.calculator(firstCoordinate, secondCoordinate));
+            }).then((distance) => {
+                dispatch({type: calculatorDescriptor.event, distance});
+            });
         });
     };
 }
