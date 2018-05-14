@@ -13,7 +13,7 @@ function toRadians(degrees) {
     return degrees * 3.14159 / 180;
 }
 
-function calculateDistance(firstCoordinate, secondCoordinate) {
+function calculateDistance1(firstCoordinate, secondCoordinate) {    
     // do the calculation myself according to https://en.wikipedia.org/wiki/Great-circle_distance
     var firstLatitude = toRadians(firstCoordinate.lat);
     var firstLongitude = toRadians(firstCoordinate.lng);
@@ -30,16 +30,20 @@ function calculateDistance(firstCoordinate, secondCoordinate) {
     var myDistance = EARTH_RADIUS * delSigma;
 
     console.log("my calculation: " + myDistance);
+    
+    // use my value for now
+    return myDistance;
+}
 
+function calculateDistance2(firstCoordinate, secondCoordinate) {
     // do the calculation using a package
     var coord1 = {lon: firstCoordinate.lng, lat: firstCoordinate.lat};
     var coord2 = {lon: secondCoordinate.lng, lat: secondCoordinate.lat};
 
     var distance = geodist(coord1, coord2);
     console.log("other calculation : " + distance);
-
-    // use my value for now
-    return myDistance;
+    
+    return distance;
 }
 
 export function updateCoordinates(firstCoordinate, secondCoordinate) {
@@ -51,10 +55,15 @@ export function updateCoordinates(firstCoordinate, secondCoordinate) {
         // up the rest of the processing while the calculation is being done, 
         // potentially via a service call.  (not in this example, but in principle 
         // it could).
-        var distancePromise = new Promise((resolve, reject) => {
-            return resolve(calculateDistance(firstCoordinate, secondCoordinate));
+        var distance1Promise = new Promise((resolve, reject) => {
+            return resolve(calculateDistance1(firstCoordinate, secondCoordinate));
         }).then((distance) => {
-            dispatch({type: ActionTypes.UPDATE_DISTANCE, distance});
+            dispatch({type: ActionTypes.UPDATE_DISTANCE_1, distance});
+        });
+        var distance2Promise = new Promise((resolve, reject) => {
+            return resolve(calculateDistance2(firstCoordinate, secondCoordinate));
+        }).then((distance) => {
+            dispatch({type: ActionTypes.UPDATE_DISTANCE_2, distance});
         });
     };
 }

@@ -7,21 +7,27 @@
 import ActionTypes from '../actions/ActionTypes';
 
 const initialState = {
-    distance: -1,
+    distance1: -1,
+    distance2: -1,
     hasDistance: false
 };
 
 export default function distanceReducer(state = initialState, action) {
     switch (action.type) {
-        case ActionTypes.UPDATE_DISTANCE:
+        case ActionTypes.UPDATE_DISTANCE_1:
             return {
                 ...state,
                 hasDistance: true,
-                distance: action.distance
+                distance1: action.distance
+            }
+        case ActionTypes.UPDATE_DISTANCE_2:
+            return {
+                ...state,
+                distance2: action.distance
             }
         default:
             return {
                 ...state
             }
-    }
+}
 }

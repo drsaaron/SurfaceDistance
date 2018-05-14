@@ -20,7 +20,7 @@ export default class CoordinateDistance extends Component {
     render() {
         return (
                 <div id="componentDistance" className={this.getClassNames()}>
-                    Distance: <span className="distance">{this.props.distance.distance}</span> miles
+                    Distance: <span className="distance">{this.props.distance.distance1} ({this.props.distance.distance2})</span> miles
                 </div>
                 );
     }
