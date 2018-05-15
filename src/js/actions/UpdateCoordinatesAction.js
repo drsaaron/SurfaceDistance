@@ -46,6 +46,12 @@ function calculateDistance2(firstCoordinate, secondCoordinate) {
     return distance;
 }
 
+function makeCalculationPromise(calculator, firstCoordinate, secondCoordinate) {
+    return new Promise((resolve, reject) => {
+        resolve(calculator(firstCoordinate, secondCoordinate));
+    });
+}
+
 export function updateCoordinates(firstCoordinate, secondCoordinate) {
     return (dispatch) => {
         dispatch({type: ActionTypes.UPDATE_FIRST_COORDINATE, firstCoordinate});
@@ -59,17 +65,17 @@ export function updateCoordinates(firstCoordinate, secondCoordinate) {
             {
                 calculator: calculateDistance1,
                 event: ActionTypes.UPDATE_DISTANCE_1
-            }, {
+            }, 
+            {
                 calculator: calculateDistance2,
                 event: ActionTypes.UPDATE_DISTANCE_2
             }];
         calculatorArray.map((calculatorDescriptor) => {
             console.log("initiating calculation for " + calculatorDescriptor.event);
-            var promise = new Promise((resolve, reject) => {
-                return resolve(calculatorDescriptor.calculator(firstCoordinate, secondCoordinate));
-            }).then((distance) => {
-                dispatch({type: calculatorDescriptor.event, distance});
-            });
+            makeCalculationPromise(calculatorDescriptor.calculator, firstCoordinate, secondCoordinate)
+                .then((distance) => {
+                    dispatch({type: calculatorDescriptor.event, distance});
+                });
         });
     };
 }
