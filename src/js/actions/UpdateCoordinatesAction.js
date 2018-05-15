@@ -7,6 +7,7 @@
 import ActionTypes from './ActionTypes';
 import geodist from 'geodist';
 import request from 'superagent';
+import surfaceDistanceAPI from '../api/SurfaceDistanceAPI';
 
 const EARTH_RADIUS = 3959;
 
@@ -14,48 +15,37 @@ function toRadians(degrees) {
     return degrees * 3.14159 / 180;
 }
 
-function convertCoordinate(coordinate) {
-    return {
-        latitude: coordinate.lat,
-        longitude: coordinate.lng
-    };
-}
-
 function calculateDistanceInternal(firstCoordinate, secondCoordinate) {
     // do the calculation myself according to https://en.wikipedia.org/wiki/Great-circle_distance
-     var firstLatitude = toRadians(firstCoordinate.lat);
-     var firstLongitude = toRadians(firstCoordinate.lng);
-     var secondLatitude = toRadians(secondCoordinate.lat);
-     var secondLongitude = toRadians(secondCoordinate.lng);
-     
-     var delLatitude = secondLatitude - firstLatitude;
-     var delLongitude = secondLongitude - firstLongitude;
-     
-     var term1 = Math.sin(delLatitude / 2);
-     var term2 = Math.sin(delLongitude / 2);
-     
-     var delSigma = 2 * Math.asin(Math.sqrt(Math.pow(term1, 2) + Math.cos(firstLatitude) * Math.cos(secondLatitude) * Math.pow(term2, 2)));
-     var myDistance = EARTH_RADIUS * delSigma;
-     
-     console.log("my calculation: " + myDistance);
-     
-     // use my value for now
-     return myDistance;   
+    var firstLatitude = toRadians(firstCoordinate.lat);
+    var firstLongitude = toRadians(firstCoordinate.lng);
+    var secondLatitude = toRadians(secondCoordinate.lat);
+    var secondLongitude = toRadians(secondCoordinate.lng);
+
+    var delLatitude = secondLatitude - firstLatitude;
+    var delLongitude = secondLongitude - firstLongitude;
+
+    var term1 = Math.sin(delLatitude / 2);
+    var term2 = Math.sin(delLongitude / 2);
+
+    var delSigma = 2 * Math.asin(Math.sqrt(Math.pow(term1, 2) + Math.cos(firstLatitude) * Math.cos(secondLatitude) * Math.pow(term2, 2)));
+    var myDistance = Math.round(EARTH_RADIUS * delSigma);
+
+    console.log("my calculation: " + myDistance);
+
+    // use my value for now
+    return myDistance;
 }
 
+/* calculate the distance via a service call.  If the service calls gets an error
+ * fallback to the internal calculation.
+ */
 function calculateDistance1(firstCoordinate, secondCoordinate) {
-    var distanceObject = {
-        firstCoordinate: convertCoordinate(firstCoordinate),
-        secondCoordinate: convertCoordinate(secondCoordinate)
-    };
-
-    return request
-            .post("http://localhost:9080/distance")
-            .send(distanceObject)
-            .set('Accept', 'application/json')
-            .then((res) => JSON.parse(res.text))
-            .then((res) => res.distance)
-            .catch((error) => { console.log("error: " + error); return calculateDistanceInternal(firstCoordinate, secondCoordinate); });
+    return surfaceDistanceAPI.calculateDistance(firstCoordinate, secondCoordinate)
+            .catch((error) => {
+                console.log("error: " + error);
+                return calculateDistanceInternal(firstCoordinate, secondCoordinate);
+            });
 }
 
 function calculateDistance2(firstCoordinate, secondCoordinate) {
@@ -82,8 +72,7 @@ export function updateCoordinates(firstCoordinate, secondCoordinate) {
 
         // calculate the distance.  use a promise so we don't hold
         // up the rest of the processing while the calculation is being done, 
-        // potentially via a service call.  (not in this example, but in principle 
-        // it could).
+        // potentially via a service call.  
         var calculatorArray = [
             {
                 calculator: calculateDistance1,
