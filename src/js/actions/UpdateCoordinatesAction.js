@@ -6,6 +6,7 @@
 
 import ActionTypes from './ActionTypes';
 import geodist from 'geodist';
+import request from 'superagent';
 
 const EARTH_RADIUS = 3959;
 
@@ -13,8 +14,15 @@ function toRadians(degrees) {
     return degrees * 3.14159 / 180;
 }
 
+function convertCoordinate(coordinate) {
+    return {
+        latitude: coordinate.lat,
+        longitude: coordinate.lng
+    };
+}
+
 function calculateDistance1(firstCoordinate, secondCoordinate) {    
-    // do the calculation myself according to https://en.wikipedia.org/wiki/Great-circle_distance
+/*    // do the calculation myself according to https://en.wikipedia.org/wiki/Great-circle_distance
     var firstLatitude = toRadians(firstCoordinate.lat);
     var firstLongitude = toRadians(firstCoordinate.lng);
     var secondLatitude = toRadians(secondCoordinate.lat);
@@ -32,7 +40,19 @@ function calculateDistance1(firstCoordinate, secondCoordinate) {
     console.log("my calculation: " + myDistance);
     
     // use my value for now
-    return myDistance;
+    return myDistance;*/
+    
+    var distanceObject = {
+        firstCoordinate: convertCoordinate(firstCoordinate),
+        secondCoordinate: convertCoordinate(secondCoordinate)
+    };
+    
+    return request
+                            .post("http://localhost:9080/distance")
+                            .send(distanceObject)
+                            .set('Accept', 'application/json')
+            .then((res) => JSON.parse(res.text))
+            .then((res) => res.distance);
 }
 
 function calculateDistance2(firstCoordinate, secondCoordinate) {

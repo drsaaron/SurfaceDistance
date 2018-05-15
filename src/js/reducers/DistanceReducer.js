@@ -9,7 +9,7 @@ import ActionTypes from '../actions/ActionTypes';
 const initialState = {
     distance1: -1,
     distance2: -1,
-    hasDistance: false
+    hasDistance: true
 };
 
 export default function distanceReducer(state = initialState, action) {
