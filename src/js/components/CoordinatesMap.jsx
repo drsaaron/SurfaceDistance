@@ -27,6 +27,7 @@ export default class CoordinatesMap extends Component {
                     <GoogleMapReact
                         defaultCenter={this.props.center}
                         defaultZoom={this.props.zoom}
+			bootstrapURLKeys={{ key: "AIzaSyBXUyrNKCgNRfCDet9IMp-UVaPwfJ08QLE" }}
                         >
                         <CoordinateMarker
                             lat={this.props.coordinates.firstCoordinate.lat}
