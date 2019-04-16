@@ -2,7 +2,7 @@ var webpack = require('webpack');
 var path = require('path');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 var CleanWebpackPlugin = require('clean-webpack-plugin');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var ExtractTextPlugin = require('mini-css-extract-plugin');
 //var path = require('path');
 
 var HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -14,10 +14,8 @@ var HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
 
 var copyPatterns = [
     {from: 'src/index.html'},
-    {from: 'src/favicon.ico'},
     {from: 'src/css', to: 'css'},
-    {from: 'src/images', to: 'images'},
-    {from: 'data', to: 'data'}
+    {from: 'src/images', to: 'images'}
 ];
 
 module.exports = {
@@ -30,13 +28,9 @@ module.exports = {
         filename: "bundle.js"
     },
 
-    devServer: {
-        outputPath: __dirname + '/dist'
-    },
-
     module: {
 
-        loaders: [
+        rules: [
             {
                 test: /\.jsx?$/,
                 exclude: /node_modules/,
@@ -55,7 +49,7 @@ module.exports = {
         }), HtmlWebpackPluginConfig],
     
     resolve: {
-        extensions: [ '', '.js', '.jsx' ]
+        extensions: [ '.js', '.jsx' ]
     }
 
 };
