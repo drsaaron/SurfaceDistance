@@ -1,6 +1,4 @@
-import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { push } from 'react-router-redux';
 import CoordinatesMap from './CoordinatesMap';
 import CoordinatesInput from './CoordinatesInput';
 import { updateCoordinates } from '../actions/UpdateCoordinatesAction';
@@ -19,22 +17,16 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-class Main extends Component {
-    constructor(props, context) {
-        super(props, context);
-    }
+const Main = (props) => {
 
-    render() {
-        var zoom = 1;
-        var defaultCenter = { lat: 43.038902, lng: -87.906471 };
-        return (
-                <div>
-                    <CoordinatesInput coordinates={this.props.map} updateCoordinates={this.props.updateCoordinates} />
-                    <CoordinateDistance distance={this.props.distance} />
-                    <CoordinatesMap center={defaultCenter} text="Point" coordinates={this.props.map} />
-                </div>
-                );
-    }
+    var defaultCenter = { lat: 43.038902, lng: -87.906471 };
+    return (
+        <div>
+            <CoordinatesInput coordinates={props.map} updateCoordinates={props.updateCoordinates} />
+            <CoordinateDistance distance={props.distance} />
+            <CoordinatesMap center={defaultCenter} text="Point" coordinates={props.map} />
+        </div>
+    );
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main);

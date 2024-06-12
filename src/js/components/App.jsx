@@ -4,26 +4,16 @@
  * and open the template in the editor.
  */
 
-import React, {Component} from 'react';
-import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import Main from './Main';
 import { Provider } from 'react-redux';
-import store, { history } from '../store/SurfaceDistanceStore';
+import store from '../store/SurfaceDistanceStore';
 
-export default class App extends Component {
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-        return (
-                <Provider store={store}>
-                    <BrowserRouter history={history}>
-                        <Routes>
-                            <Route exact path='/' component={Main} />
-                        </Routes>
-                    </BrowserRouter>
-                </Provider>
-                );
-    }
+const App = (props) => {
+    return (
+        <Provider store={store}>
+	    <Main />
+        </Provider>
+    );
 }
+
+export default App;
