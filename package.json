@@ -5,11 +5,11 @@
   "description": "This application provides an demo of google maps in react and a calculation of distance between points",
   "main": "index.js",
   "dependencies": {
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
+    "@testing-library/jest-dom": "^6.4.6",
+    "@testing-library/react": "^16.0.0",
+    "@testing-library/user-event": "^14.5.0",
     "classnames": "^2.5.1",
-    "geo-distance": "^0.1.2",
+    "geo-distance": "^0.2.0",
     "geodist": "^0.2.1",
     "google-map-react": "^2.0.1",
     "history": "^5.3.0",
@@ -23,7 +23,7 @@
     "redux-logger": "^3.0.6",
     "redux-thunk": "^3.1.0",
     "superagent": "^9.0.2",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^4.1.1"
   },
   "scripts": {
     "start": "react-scripts start",
