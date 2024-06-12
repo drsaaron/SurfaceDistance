@@ -1,6 +1,6 @@
 {
   "name": "SurfaceDistance",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "private": true,
   "description": "This application provides an demo of google maps in react and a calculation of distance between points",
   "main": "index.js",
