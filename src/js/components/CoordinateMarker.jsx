@@ -4,19 +4,14 @@
  * and open the template in the editor.
  */
 
-import React, {Component} from 'react';
 import {coordinateMarkerStyle} from './CoordinateMarkerStyle';
 
-export default class CoordinateMarker extends Component {
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-        return (
-                <div style={coordinateMarkerStyle}>
-                    {this.props.text}
-                </div>
-                );
-    }
+const CoordinateMarker = (props) => {
+    return (
+        <div style={coordinateMarkerStyle}>
+            {props.text}
+        </div>
+    );
 }
+
+export default CoordinateMarker;

@@ -4,24 +4,21 @@
  * and open the template in the editor.
  */
 
-import React, {Component} from 'react';
 import classNames from 'classnames';
 
-export default class CoordinateDistance extends Component {
-    constructor(props) {
-        super(props);
-    }
+const CoordinateDistance = (props) => {
 
-    getClassNames() {
+    const getClassNames = () => {
         return classNames({
-            hidden: !this.props.distance.hasDistance
+            hidden: !props.distance.hasDistance
         });
     }
-    render() {
-        return (
-                <div id="componentDistance" className={this.getClassNames()}>
-                    Distance: <span className="distance">{this.props.distance.distance1} ({this.props.distance.distance2})</span> miles
-                </div>
-                );
-    }
+    
+    return (
+        <div id="componentDistance" className={getClassNames()}>
+            Distance: <span className="distance">{props.distance.distance1} ({props.distance.distance2})</span> miles
+        </div>
+    );
 }
+
+export default CoordinateDistance;
