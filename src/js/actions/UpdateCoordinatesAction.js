@@ -6,7 +6,6 @@
 
 import ActionTypes from './ActionTypes';
 import geodist from 'geodist';
-import request from 'superagent';
 import surfaceDistanceAPI from '../api/SurfaceDistanceAPI';
 
 const EARTH_RADIUS = 3959;
@@ -82,7 +81,7 @@ export function updateCoordinates(firstCoordinate, secondCoordinate) {
                 calculator: calculateDistance2,
                 event: ActionTypes.UPDATE_DISTANCE_2
             }];
-        calculatorArray.map((calculatorDescriptor) => {
+        calculatorArray.forEach((calculatorDescriptor) => {
             console.log("initiating calculation for " + calculatorDescriptor.event);
             makeCalculationPromise(calculatorDescriptor.calculator, firstCoordinate, secondCoordinate)
                     .then((distance) => {

@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-import {useState, useEffect} from 'react';
+import {useState} from 'react';
 
 const CoordinatesInput = (props) => {
 
@@ -14,10 +14,12 @@ const CoordinatesInput = (props) => {
     const [secondLongitude, setSecondLongitude] = useState(props.coordinates.secondCoordinate.lng || 0);
 
     const updateFirstLatitude = (event) => {
+	console.log("updating first latitude");
 	setFirstLatitude(event.target.value);
     }
 
     const updateSecondLatitude = (event) => {
+	console.log("updating seccond latitude");
 	setSecondLatitude(event.target.value);
     }
 
@@ -30,6 +32,7 @@ const CoordinatesInput = (props) => {
     }
 
     const updateMap = () => {
+	console.log("updating map");
         var firstCoordinate = { lat: firstLatitude, lng: firstLongitude };
         var secondCoordinate = { lat: secondLatitude, lng: secondLongitude };
         

@@ -20,11 +20,12 @@ const mapDispatchToProps = (dispatch) => {
 const Main = (props) => {
 
     var defaultCenter = { lat: 43.038902, lng: -87.906471 };
+    var zoom = 1;
     return (
         <div>
             <CoordinatesInput coordinates={props.map} updateCoordinates={props.updateCoordinates} />
             <CoordinateDistance distance={props.distance} />
-            <CoordinatesMap center={defaultCenter} text="Point" coordinates={props.map} />
+            <CoordinatesMap center={defaultCenter} text="Point" coordinates={props.map} zoom={zoom} />
         </div>
     );
 }

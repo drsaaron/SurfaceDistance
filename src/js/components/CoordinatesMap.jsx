@@ -8,6 +8,7 @@ import GoogleMapReact from 'google-map-react';
 import CoordinateMarker from './CoordinateMarker';
 
 const CoordinatesMap = (props) => {
+
     return (
         <div id="displayMap">
             <GoogleMapReact
@@ -29,7 +30,5 @@ const CoordinatesMap = (props) => {
         </div>
     );
 };
-
-CoordinatesMap.defaultProps = {center: { lat: 59.95, lng: 30.33 }, zoom: 1};
 
 export default CoordinatesMap;
