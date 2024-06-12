@@ -5,8 +5,7 @@
  */
 
 import React, {Component} from 'react';
-import { Route, Switch } from 'react-router-dom';
-import { ConnectedRouter } from 'react-router-redux';
+import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import Main from './Main';
 import { Provider } from 'react-redux';
 import store, { history } from '../store/SurfaceDistanceStore';
@@ -19,11 +18,11 @@ export default class App extends Component {
     render() {
         return (
                 <Provider store={store}>
-                    <ConnectedRouter history={history}>
-                        <Switch>
+                    <BrowserRouter history={history}>
+                        <Routes>
                             <Route exact path='/' component={Main} />
-                        </Switch>
-                    </ConnectedRouter>
+                        </Routes>
+                    </BrowserRouter>
                 </Provider>
                 );
     }

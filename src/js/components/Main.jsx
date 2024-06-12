@@ -19,8 +19,7 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-@connect(mapStateToProps, mapDispatchToProps)
-export default class Main extends Component {
+class Main extends Component {
     constructor(props, context) {
         super(props, context);
     }
@@ -37,3 +36,5 @@ export default class Main extends Component {
                 );
     }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Main);
