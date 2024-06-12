@@ -18,7 +18,8 @@ class SurfaceDistanceAPI {
     calculateDistance(firstCoordinate, secondCoordinate) {
         var distanceObject = {
             firstCoordinate: this.convertCoordinate(firstCoordinate),
-            secondCoordinate: this.convertCoordinate(secondCoordinate)
+            secondCoordinate: this.convertCoordinate(secondCoordinate),
+	    unit: "miles"
         };
 
         return request
